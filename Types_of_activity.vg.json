@@ -1,0 +1,48 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Bubble chart showing participation rate vs total estimate by gender with larger graph.",
+  "width": 1000,
+  "height": 1000,
+  "data": {
+    "url": "Males.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {
+      "fold": ["Males_ParticipationRate", "Females_ParticipationRate"],
+      "as": ["Gender", "ParticipationRate"]
+    }
+  ],
+  "mark": {"type": "circle", "opacity": 0.7},
+  "encoding": {
+    "x": {
+      "field": "Persons_Estimate",
+      "type": "quantitative",
+      "title": "Total Estimate ('000)"
+    },
+    "y": {
+      "field": "ParticipationRate",
+      "type": "quantitative",
+      "title": "Participation Rate (%)"
+    },
+    "size": {
+      "field": "Persons_ParticipationRate",
+      "type": "quantitative",
+      "title": "Overall Participation Rate",
+      "legend": {"title": "Overall Rate"},
+      "scale": {"range": [50, 1000]}
+    },
+    "color": {
+      "field": "Gender",
+      "type": "nominal",
+      "scale": {"range": ["#e41a1c", "#377eb8"]},
+      "title": "Gender"
+    },
+    "tooltip": [
+      {"field": "Sports", "title": "Sport"},
+      {"field": "Gender"},
+      {"field": "ParticipationRate", "title": "Participation Rate (%)"},
+      {"field": "Persons_Estimate", "title": "Estimate ('000)"}
+    ]
+  }
+}
