@@ -1,0 +1,91 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Slope chart comparing physical activity guideline compliance with and without work exercise by socioeconomic area and sex.",
+  "title": {
+    "text": "Change in Meeting Physical Activity Guidelines by Socioeconomic Area",
+    "subtitle": "Comparing inclusion vs exclusion of work-related exercise (Age-standardised estimates)",
+    "fontSize": 20,
+    "anchor": "start"
+  },
+  "data": {
+    "values": [
+      {"Sex": "Male", "Places": "1 (lowest socioeconomic areas)", "Conditions": "Including work exercise", "Percent": 58.6},
+      {"Sex": "Male", "Places": "1 (lowest socioeconomic areas)", "Conditions": "Excluding work exercise", "Percent": 51},
+      {"Sex": "Male", "Places": "2", "Conditions": "Including work exercise", "Percent": 63.5},
+      {"Sex": "Male", "Places": "2", "Conditions": "Excluding work exercise", "Percent": 57.6},
+      {"Sex": "Male", "Places": "3", "Conditions": "Including work exercise", "Percent": 60.2},
+      {"Sex": "Male", "Places": "3", "Conditions": "Excluding work exercise", "Percent": 54},
+      {"Sex": "Male", "Places": "4", "Conditions": "Including work exercise", "Percent": 65.7},
+      {"Sex": "Male", "Places": "4", "Conditions": "Excluding work exercise", "Percent": 60.2},
+      {"Sex": "Male", "Places": "5 (highest socioeconomic areas)", "Conditions": "Including work exercise", "Percent": 67.4},
+      {"Sex": "Male", "Places": "5 (highest socioeconomic areas)", "Conditions": "Excluding work exercise", "Percent": 62.4},
+      {"Sex": "Female", "Places": "1 (lowest socioeconomic areas)", "Conditions": "Including work exercise", "Percent": 51},
+      {"Sex": "Female", "Places": "1 (lowest socioeconomic areas)", "Conditions": "Excluding work exercise", "Percent": 45.7},
+      {"Sex": "Female", "Places": "2", "Conditions": "Including work exercise", "Percent": 56},
+      {"Sex": "Female", "Places": "2", "Conditions": "Excluding work exercise", "Percent": 52.5},
+      {"Sex": "Female", "Places": "3", "Conditions": "Including work exercise", "Percent": 53.2},
+      {"Sex": "Female", "Places": "3", "Conditions": "Excluding work exercise", "Percent": 49.9},
+      {"Sex": "Female", "Places": "4", "Conditions": "Including work exercise", "Percent": 60.6},
+      {"Sex": "Female", "Places": "4", "Conditions": "Excluding work exercise", "Percent": 55.9},
+      {"Sex": "Female", "Places": "5 (highest socioeconomic areas)", "Conditions": "Including work exercise", "Percent": 58.9},
+      {"Sex": "Female", "Places": "5 (highest socioeconomic areas)", "Conditions": "Excluding work exercise", "Percent": 57.5},
+      {"Sex": "Persons", "Places": "1 (lowest socioeconomic areas)", "Conditions": "Including work exercise", "Percent": 54.8},
+      {"Sex": "Persons", "Places": "1 (lowest socioeconomic areas)", "Conditions": "Excluding work exercise", "Percent": 48.3},
+      {"Sex": "Persons", "Places": "2", "Conditions": "Including work exercise", "Percent": 59.8},
+      {"Sex": "Persons", "Places": "2", "Conditions": "Excluding work exercise", "Percent": 55},
+      {"Sex": "Persons", "Places": "3", "Conditions": "Including work exercise", "Percent": 56.5},
+      {"Sex": "Persons", "Places": "3", "Conditions": "Excluding work exercise", "Percent": 51.8},
+      {"Sex": "Persons", "Places": "4", "Conditions": "Including work exercise", "Percent": 63.2},
+      {"Sex": "Persons", "Places": "4", "Conditions": "Excluding work exercise", "Percent": 58.3},
+      {"Sex": "Persons", "Places": "5 (highest socioeconomic areas)", "Conditions": "Including work exercise", "Percent": 62.8},
+      {"Sex": "Persons", "Places": "5 (highest socioeconomic areas)", "Conditions": "Excluding work exercise", "Percent": 59.8}
+    ]
+  },
+  "mark": {
+    "type": "line",
+    "point": {"filled": true, "size": 70},
+    "strokeWidth": 3
+  },
+  "encoding": {
+    "x": {
+      "field": "Conditions",
+      "type": "nominal",
+      "sort": ["Including work exercise", "Excluding work exercise"],
+      "axis": {
+        "title": null,
+        "labels": false   
+      }
+    },
+    "y": {
+      "field": "Percent",
+      "type": "quantitative",
+      "axis": {"title": "Per cent meeting guideline"},
+      "scale": {"domain": [45, 70]}
+    },
+    "color": {
+      "field": "Sex",
+      "type": "nominal",
+      "scale": {"range": ["#ff69b4", "#1f77b4", "#7D7D7D"]},
+      "legend": {"title": "Sex"}
+    },
+    "facet": {
+      "field": "Places",
+      "type": "nominal",
+      "columns": 3,
+      "sort": ["1 (lowest socioeconomic areas)", "2", "3", "4", "5 (highest socioeconomic areas)"],
+      "header": {"title": "Socioeconomic area"}
+    },
+    "tooltip": [
+      {"field": "Sex"},
+      {"field": "Places"},
+      {"field": "Conditions"},
+      {"field": "Percent", "format": ".1f"}
+    ]
+  },
+  "config": {
+    "view": {"stroke": "transparent"},
+    "background": "#f8fbff",
+    "axis": {"labelFontSize": 12, "titleFontSize": 13},
+    "facet": {"spacing": 25}
+  }
+}

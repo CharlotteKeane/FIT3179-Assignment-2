@@ -1,0 +1,73 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Trends in physical activity guideline adherence by sex, 2007–08 to 2022 with annotation",
+  "width": 600,
+  "height": 620,
+  "title": {
+    "text": "Physical Activity Guideline (Met vs Did Not Meet) by Sex, 2007–08 to 2022",
+    "fontSize": 20,
+    "anchor": "start"
+  },
+  "layer": [
+    {
+      "data": {"url": "Males.csv"},
+      "mark": {"type": "line", "point": true, "strokeWidth": 3},
+      "encoding": {
+        "x": {"field": "Year", "type": "quantitative", "title": "Survey Year"},
+        "y": {"field": "Percent", "type": "quantitative", "title": "Percentage (%)"},
+        "color": {
+          "field": "Sex",
+          "type": "nominal",
+          "title": "Sex",
+          "scale": {"range": ["#ff69b4", "#1f77b4"]}
+        },
+        "strokeDash": {
+          "field": "Category",
+          "type": "nominal",
+          "title": "Guideline Category",
+          "scale": {"domain": ["Met", "Did Not Meet"], "range": [[6,3], [2,2]]}
+        },
+        "tooltip": [
+          {"field": "Year", "title": "Year"},
+          {"field": "Sex", "title": "Sex"},
+          {"field": "Category", "title": "Category"},
+          {"field": "Percent", "title": "Percent", "format": ".1f"}
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {"x": 2012, "y": 35.2, "labelX": 2014, "labelY": 38, "label": "In 2012 male and female participation nearly equal"}
+        ]
+      },
+      "layer": [
+        {
+          "mark": {"type": "rule", "color": "black", "strokeWidth": 1.2},
+          "encoding": {
+            "x": {"field": "x", "type": "quantitative"},
+            "y": {"field": "y", "type": "quantitative"},
+            "x2": {"field": "labelX", "type": "quantitative"},
+            "y2": {"field": "labelY", "type": "quantitative"}
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "bottom",
+            "fontSize": 14,
+            "fontWeight": "bold",
+            "color": "black"
+          },
+          "encoding": {
+            "x": {"field": "labelX", "type": "quantitative"},
+            "y": {"field": "labelY", "type": "quantitative"},
+            "text": {"field": "label"}
+          }
+        }
+      ]
+    }
+  ],
+  "background": "#f0f8ff"
+}

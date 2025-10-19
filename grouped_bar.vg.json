@@ -1,0 +1,84 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Grouped bar chart with map-linked highlighting and 18–24 annotation",
+  "height": 300,
+  "params": [
+    {
+      "name": "SelectedAge",
+      "value": "All"
+    }
+  ],
+  "data": { "url": "Males.csv" },
+  "transform": [
+    { "fold": ["Met (%)", "Did not meet (%)"], "as": ["Status", "Value"] }
+  ],
+  "layer": [
+    {
+      "mark": "bar",
+      "encoding": {
+        "x": { "field": "Age group", "type": "ordinal", "title": "Age Group" },
+        "xOffset": { "field": "Status" },
+        "y": { "field": "Value", "type": "quantitative", "title": "Percentage" },
+        "color": {
+          "condition": {
+            "param": "SelectedAge",
+            "empty": false,
+            "field": "Status",
+            "type": "nominal",
+            "scale": { "domain": ["Met (%)", "Did not meet (%)"], "range": ["#1f77b4", "#ff7f0e"] }
+          },
+          "value": "#d3d3d3"
+        },
+        "opacity": {
+          "condition": {
+            "param": "SelectedAge",
+            "empty": false,
+            "value": 1
+          },
+          "value": 0.3
+        },
+        "tooltip": [
+          { "field": "Age group" },
+          { "field": "Status" },
+          { "field": "Value", "type": "quantitative", "format": ".1f" }
+        ]
+      }
+    },
+    {
+      "transform": [
+        { "filter": "datum['Age group'] === '18 to 24' && datum.Status === 'Met (%)'" }
+      ],
+      "mark": {
+        "type": "rule",
+        "color": "black",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "x": { "field": "Age group", "type": "ordinal" },
+        "xOffset": { "field": "Status" },
+        "y": { "field": "Value", "type": "quantitative" },
+        "y2": { "value": 50 }
+      }
+    },
+    {
+      "transform": [
+        { "filter": "datum['Age group'] === '18 to 24' && datum.Status === 'Met (%)'" }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "baseline": "bottom",
+        "dy": -5,
+        "fontSize": 14,
+        "fontWeight": "bold",
+        "color": "black"
+      },
+      "encoding": {
+        "x": { "field": "Age group", "type": "ordinal" },
+        "xOffset": { "field": "Status" },
+        "y": { "value": 50 },
+        "text": { "value": "18–24: Highest met percentage at 36.9%" }
+      }
+    }
+  ]
+}

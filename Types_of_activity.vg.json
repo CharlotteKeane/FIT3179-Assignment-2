@@ -1,0 +1,64 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Bubble chart showing participation rate vs total estimate by gender with label",
+  "title": {
+    "text": "Participation Rate by Gender",
+    "fontSize": 24,
+    "anchor": "start",
+    "color": "#333333"
+  },
+  "width": 500,
+  "height": 600,
+  "data": {
+    "url": "Males.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {
+      "fold": ["Males_ParticipationRate", "Females_ParticipationRate"],
+      "as": ["Gender", "ParticipationRate"]
+    }
+  ],
+  "layer": [
+    {
+      "mark": {"type": "circle", "opacity": 0.9},
+      "encoding": {
+        "x": {"field": "Persons_Estimate", "type": "quantitative", "title": "Total Estimate ('000)"},
+        "y": {"field": "ParticipationRate", "type": "quantitative", "title": "Participation Rate (%)"},
+        "size": {"field": "Persons_ParticipationRate", "type": "quantitative", "title": "Overall Participation Rate", "scale": {"range": [50,100]}},
+        "color": {"field": "Gender", "type": "nominal", "scale": {"range": ["#ff69b4", "#1f77b4"]}, "title": "Gender"},
+        "tooltip": [
+          {"field": "Sports", "title": "Sport"},
+          {"field": "Gender"},
+          {"field": "ParticipationRate", "title": "Participation Rate (%)"},
+          {"field": "Persons_Estimate", "title": "Estimate ('000)"}
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "x": 3300,
+            "y": 15.9,
+            "label": "Highest male participation is at gym\nbut more females participate at the gym than males."
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "fontSize": 14,
+        "fontWeight": "bold",
+        "color": "black",
+        "lineBreak": "\n"
+      },
+      "encoding": {
+        "x": {"field": "x", "type": "quantitative"},
+        "y": {"field": "y", "type": "quantitative"},
+        "text": {"field": "label"}
+      }
+    }
+  ]
+}

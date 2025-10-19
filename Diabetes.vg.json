@@ -1,0 +1,87 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Trend of diabetes prevalence (age-standardised %) by sex, 2000–2021 with annotation",
+  "width": 1080,
+  "height": 450,
+  "title": {
+    "text": "Prevalence of Diabetes in Australia (2000–2021)",
+    "fontSize": 22,
+    "anchor": "start"
+  },
+  "data": {"url": "Males.csv"},
+  "transform": [
+    {
+      "fold": ["Males_Percent", "Females_Percent", "Persons_Percent"],
+      "as": ["Sex", "Percent"]
+    }
+  ],
+  "layer": [
+    {
+      "mark": {"type": "line", "point": true},
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "type": "quantitative",
+          "title": "Year",
+          "scale": {"domain": [2000, 2021]},
+          "axis": {"format": "d", "tickMinStep": 1}
+        },
+        "y": {
+          "field": "Percent",
+          "type": "quantitative",
+          "title": "Age-standardised Prevalence (%)",
+          "scale": {"domainMin": 2}
+        },
+        "color": {
+          "field": "Sex",
+          "type": "nominal",
+          "title": "Sex",
+          "scale": {
+            "domain": ["Males_Percent", "Females_Percent", "Persons_Percent"],
+            "range": ["#1f77b4", "#ff69b4", "#2ca02c"]
+          },
+          "legend": {
+            "title": "Sex",
+            "values": ["Males_Percent", "Females_Percent", "Persons_Percent"],
+            "labelExpr": "datum.label == 'Males_Percent' ? 'Males' : datum.label == 'Females_Percent' ? 'Females' : 'Persons'"
+          }
+        },
+        "tooltip": [
+          {"field": "Year", "type": "quantitative"},
+          {"field": "Sex", "title": "Group"},
+          {
+            "field": "Percent",
+            "type": "quantitative",
+            "title": "Prevalence (%)",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "x": 2016,
+            "y": 5.3,
+            "label": "Highest prevalence across all genders.\nDecline seen after 2017 across all genders"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "fontSize": 14,
+        "fontWeight": "bold",
+        "color": "black",
+        "lineBreak": "\n"
+      },
+      "encoding": {
+        "x": {"field": "x", "type": "quantitative"},
+        "y": {"field": "y", "type": "quantitative"},
+        "text": {"field": "label"}
+      }
+    }
+  ]
+}
